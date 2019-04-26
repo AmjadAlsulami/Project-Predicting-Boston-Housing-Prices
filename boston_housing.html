@@ -13516,7 +13516,7 @@ Standard deviation of prices: $165171.13154429477
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Answer:">Answer:<a class="anchor-link" href="#Answer:">&#182;</a></h3><ul>
-<li>Because we want to not have overfitting by using the whole data in our training so the data divided into train and test to reduce overfitting without using our test data. </li>
+<li>There is a need to evaluate model once it is trained, to know if it has learned from a training split of the data and it can generalize well on any new data. The first case might be found after evaluating model is if it didn't learn well on the data and can't predict the result of the training set, it's high bias case where the model has underfitting. The second case, when the model learn super well from data and it just memorizes it, in this case, the model didn't generalize will in new data which happened because of the high variance and the model has overfitting. The third case where the model learns well on the data and can predict the result of new data, in this case, there is a balance between bias and variance.</li>
 </ul>
 
 </div>
@@ -13595,7 +13595,7 @@ Think about the pros and cons of adding more training points based on if the tra
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Answer:">Answer:<a class="anchor-link" href="#Answer:">&#182;</a></h4><h4 id="In-general-better-model-train-with-more-data-but-regarding-the-graphs-above:">In general better model train with more data but regarding the graphs above:<a class="anchor-link" href="#In-general-better-model-train-with-more-data-but-regarding-the-graphs-above:">&#182;</a></h4><ol>
 <li>In the graph with max_depth=1, we can see that this is the underfitting case was the training score gets low by time with data increases and the testing score gets high by time until the two curves get closer and converge in the same point -low score-, in this case having more training points will not benefit the model.</li>
-<li>In the graph with max_depth=3, we can see that this is the Good case was the training score gets high by time with data increases and the testing score gets high by time until the two curves get closer and converge in the same point -high score-, in this case having more training points will benefit the model.</li>
+<li>In the graph with max_depth=3, we can see that this is the Good case was the training score gets high by time with data increases and the testing score gets high by time until the two curves get closer and converge in the same point -high score-, in this case having more training points will not benefit the model because the two curves after 200x are becoming flat with no seen improvement.</li>
 <li>In the graph with max_depth=6 &amp;10, we can see that this is the overfitting case was the training score gets high by time  with data increases and the testing score was low and gets high by time but the two curves will get closer and not converge to the same point, they will always be a distance between them  , in this case having more training points will give a good score in training because overfitting model fit will large data but it will give a bad score in the testing so it will not benefit the model.</li>
 </ol>
 
@@ -13745,8 +13745,10 @@ Think about the pros and cons of adding more training points based on if the tra
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Answer:">Answer:<a class="anchor-link" href="#Answer:">&#182;</a></h3><ul>
-<li>Cross-validation is resampling procedure used to estimate how the model will work on unseen data by using a limited sample in order to estimate how the model will except to work in general when used to make a prediction on data not used during training the model. The Cross-Validation procedure has one parameter called K which is the number of groups that the data sample will be split into. the procedure called  K-fold Cross-Validation. When the value of k assigned, it will be used on splitting the data, so, if k =20 then 20-fold cross-validation.</li>
-<li>Grid search aims to optimization hyper-parameter and its a method to find the best combination of hyper-parameters like max_depth in the Decision tree. In this scenario, there will be several models, each with a different combination of hyper-parameters. Each of these combinations of parameters, which correspond to a single model, can be said to be in "grid". Next, there is a need to train each of these models and evaluate them using cross-validation which will work to protect the models against overfitting by splitting the data into train and test parts.</li>
+<li><p>Cross-validation is a resampling procedure used to estimate how the model will except to work in general when used to make a prediction on data not used during training the model. The Cross-Validation procedure has one parameter called K which is the number of groups that the data sample will be split into. the procedure called  K-fold Cross-Validation. When the value of k assigned, it will be used on splitting the data into K "folds" of equal size, so, if k =20 then 20-fold cross-validation. Each fold will be as the testing set 1 time and as the training set 19 times this happened for all folds. After that, the average that is taking from the testing performance result is used as the estimate of out-of-all sample performance which is called " cross-validated performance".</p>
+</li>
+<li><p>Grid search aims to optimization hyper-parameter and its a method to find the best combination of hyper-parameters like max_depth in the Decision tree. In this scenario, there will be several models, each with a different combination of hyper-parameters. Each of these combinations of parameters, which correspond to a single model, can be said to be in "grid". Next, there is a need to train each of these models and evaluate them using cross-validation which will work to protect the models against overfitting by splitting the data into train and test parts and also find the estimate optimal combination of hyper-parameters to be used by calculating cross-validated performance.</p>
+</li>
 </ul>
 
 </div>
@@ -14057,13 +14059,17 @@ Range in prices: $73,357.39
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Answer:">Answer:<a class="anchor-link" href="#Answer:">&#182;</a></h3><ul>
-<li>It gives you an indication of what was happened back at that time, and how things were measured (prices). It's important that data reflect inflation and how things work and measured in the near future.</li>
-<li>No, its not enough , many things changed from that time and also life needs are changed too many things have been introduced and also many things disappeared (home characteristic in identifying prices). </li>
-<li>Yes, it will give more information about the houses prices in different values. </li>
-<li>Yes, DecisionTreeRegressor with grid search is a robust technic. </li>
-<li>No, because each city type has it's own characteristic and measured values.</li>
-<li>Yes, it's logically true, but there might be other characteristics that control the prices. </li>
+<h3 id="Answer:">Answer:<a class="anchor-link" href="#Answer:">&#182;</a></h3><h4 id="Data-Age:">Data Age:<a class="anchor-link" href="#Data-Age:">&#182;</a></h4><ul>
+<li>It gives you an indication of what was happened back at that time, and how things were measured (prices). It's important that data reflect inflation and how things work and measured in the near future.
+####  Features numbers :</li>
+<li>No, it's not enough, many things changed from that time and also life needs are changed too many things have been introduced and also many things disappeared (home characteristic in identifying prices). More feature will give more information about the houses prices in different values so it will give more indication about how things are measured.
+#### Model Robust:</li>
+<li>In general, DecisionTreeRegressor with grid search is a robust technic, but back to the <em>Sensitivity</em> section, there is a difference in the price for the specific client and it changes with respect to the data it's trained on so the model is not generalizing well. 
+#### Generalizing :</li>
+<li>No, because each city type has it's own characteristic and measured values.
+#### Judging home price by neighborhood :</li>
+<li>Yes, it's logically true, but there might be other characteristics that control the prices. 
+#### As a conclusion, a constructed model should not be used in a real-world setting because the training data are very old, things have changed and it will not reflect the current near time even and it didn't generaliz well .</li>
 </ul>
 
 </div>
